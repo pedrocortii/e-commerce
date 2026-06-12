@@ -1,0 +1,21 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#0D6EFF" opacity="0.1" stroke="#0D6EFF" stroke-width="2"/>
+
+  <!-- Shopping bag shape -->
+  <g transform="translate(100, 100)">
+    <!-- Bag body -->
+    <path d="M -30 -20 L -30 30 Q -30 40 -20 40 L 20 40 Q 30 40 30 30 L 30 -20 Z"
+          fill="none" stroke="#0D6EFF" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- Handle -->
+    <path d="M -20 -20 Q -20 -40 0 -45 Q 20 -40 20 -20"
+          fill="none" stroke="#0D6EFF" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Decorative star inside -->
+    <g transform="translate(0, 5)">
+      <polygon points="0,-12 3,-4 12,-4 6,2 9,10 0,5 -9,10 -6,2 -12,-4 -3,-4"
+               fill="#0D6EFF"/>
+    </g>
+  </g>
+</svg>
