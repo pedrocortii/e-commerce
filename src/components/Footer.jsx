@@ -44,7 +44,7 @@ const Footer = () => {
             <Link href="/contacto" color="inherit" display="block" variant="body2">
               Contacto
             </Link>
-            {/* You can add more quick links here */}
+            
           </Grid>
         </Grid>
         <Box mt={3} sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 2 }}>

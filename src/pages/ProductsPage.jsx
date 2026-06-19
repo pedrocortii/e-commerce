@@ -7,6 +7,8 @@ import useProducts from '../hooks/useProducts';
 import useCategories from '../hooks/useCategories';
 import { translateProductTitle } from '../services/translator';
 
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23e0e0e0"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="14"%3ESin imagen%3C/text%3E%3C/svg%3E';
+
 const ProductsPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -15,7 +17,7 @@ const ProductsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [offset, setOffset] = useState(0);
-  const limit = 12; // Number of products per page
+  const limit = 12; // cantidad de productos por pagina
 
   const { products: allProducts, loading: productsLoading, error: productsError } = useProducts(
     selectedCategory ? 'category' : 'all',
@@ -26,19 +28,19 @@ const ProductsPage = () => {
   );
   const { categories, loading: categoriesLoading, error: categoriesError } = useCategories();
 
-  // Filter products by search query
+  // filtra productos segun la busqueda
   const filteredProducts = allProducts.filter(product =>
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    setOffset(0); // Reset pagination on search
+    setOffset(0); // reinicia la paginacion al buscar
   };
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
-    setOffset(0); // Reset pagination on category change
+    setOffset(0); // reinicia la paginacion al cambiar categoria
   };
 
   const handleNextPage = () => {
@@ -130,8 +132,12 @@ const ProductsPage = () => {
                           maxWidth: '100%',
                           objectFit: 'contain',
                         }}
-                        image={product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/200'}
+                        image={product.images && product.images.length > 0 ? product.images[0] : PLACEHOLDER_IMAGE}
                         alt={product.title}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = PLACEHOLDER_IMAGE;
+                        }}
                       />
                     </Box>
                     <CardContent sx={{ flexGrow: 1, pb: 1 }}>

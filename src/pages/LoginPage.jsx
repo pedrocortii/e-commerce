@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/perfil'); // Redirect if already logged in
+      navigate('/perfil'); // redirige si ya esta logueado
     }
   }, [user, navigate]);
 
@@ -29,7 +29,7 @@ const LoginPage = () => {
 
     const success = await login(email, password);
     if (success) {
-      navigate('/perfil'); // Redirect to profile or home on successful login
+      navigate('/perfil'); // redirige al perfil despues de loguearse
     } else {
       setError('Credenciales incorrectas. Inténtalo de nuevo.');
     }

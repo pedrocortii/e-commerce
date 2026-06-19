@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.escuelajs.co/api/v1'; // Using the Platzi API as requested
+const BASE_URL = 'https://api.escuelajs.co/api/v1';
 
 export const getProducts = async (limit = 10, offset = 0) => {
   try {
@@ -56,15 +56,21 @@ export const getProductsByCategory = async (categoryId, limit = 10, offset = 0) 
   }
 };
 
-// Placeholder for user-related API calls if needed (login, register)
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const loginUser = async (email, password) => {
-    // This is a placeholder. In a real app, you'd send credentials to an auth endpoint.
-    console.log("Simulating login for:", email);
-    return { success: true, user: { email, name: "Simulated User" } };
+  if (!emailRegex.test(email)) {
+    return { success: false };
+  }
+  const name = email.split('@')[0];
+  console.log("Simulating login for:", email);
+  return { success: true, user: { email, name } };
 };
 
 export const registerUser = async (name, email, password) => {
-    // This is a placeholder.
-    console.log("Simulating registration for:", name, email);
-    return { success: true, user: { name, email } };
+  if (!emailRegex.test(email)) {
+    return { success: false };
+  }
+  console.log("Simulating registration for:", name, email);
+  return { success: true, user: { name, email } };
 };

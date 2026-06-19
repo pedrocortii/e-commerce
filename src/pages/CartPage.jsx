@@ -1,13 +1,21 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Button, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Divider, Avatar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from 'react-router-dom'; // Import Link for "VER PRODUCTOS" button
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CartContext } from '../contexts/CartContext';
 
 const CartPage = () => {
   const { cart, eliminateProduct, emptyCart, total } = useContext(CartContext);
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    alert('¡Compra realizada con éxito! Gracias por tu compra.');
+    emptyCart();
+    navigate('/');
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -66,8 +74,8 @@ const CartPage = () => {
               <Button variant="outlined" color="secondary" onClick={emptyCart}>
                 Vaciar Carrito
               </Button>
-              <Button variant="contained" color="primary">
-                Finalizar Compra (WIP)
+              <Button variant="contained" color="primary" onClick={handleCheckout}>
+                Finalizar Compra
               </Button>
             </Box>
           </Box>

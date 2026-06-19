@@ -12,17 +12,16 @@ const ContactPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setStatus(null); // Clear previous status
+    setStatus(null); // limpia el estado anterior
 
     if (!name || !email || !subject || !message) {
       setStatus('error');
       return;
     }
 
-    // Simulate form submission
+    // simula el envio del formulario
     setTimeout(() => {
       setStatus('success');
-      // Optionally clear form fields
       setName('');
       setEmail('');
       setSubject('');

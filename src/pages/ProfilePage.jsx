@@ -29,7 +29,6 @@ const ProfilePage = () => {
             <Typography variant="h6" gutterBottom>
               Productos en carrito: {cart.length}
             </Typography>
-            {/* Additional profile details could go here */}
           </Paper>
         ) : (
           <Paper elevation={3} sx={{ p: 4, mt: 3, textAlign: 'center' }}>

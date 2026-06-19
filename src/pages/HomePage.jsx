@@ -6,8 +6,12 @@ import Footer from '../components/Footer';
 import useProducts from '../hooks/useProducts';
 import { translateProductTitle } from '../services/translator';
 
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect width="200" height="200" fill="%23e0e0e0"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="14"%3ESin imagen%3C/text%3E%3C/svg%3E';
+
 const HomePage = () => {
-  const { products, loading, error } = useProducts('all', null, null, 9);
+  const { products, loading, error } = useProducts('all', null, null, 20);
+
+  const randomProducts = [...products].sort(() => Math.random() - 0.5).slice(0, 8);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -52,7 +56,7 @@ const HomePage = () => {
             <Alert severity="error">Error al cargar los productos: {error.message}</Alert>
           ) : (
             <Grid container spacing={4}>
-              {products.map((product) => (
+              {randomProducts.map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} md={4}>
                   <Card sx={{
                     height: '100%',
@@ -81,8 +85,12 @@ const HomePage = () => {
                           objectFit: 'contain',
                           p: 2
                         }}
-                        image={product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/150'}
+                        image={product.images && product.images.length > 0 ? product.images[0] : PLACEHOLDER_IMAGE}
                         alt={translateProductTitle(product.title)}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = PLACEHOLDER_IMAGE;
+                        }}
                       />
                     </Box>
                     <CardContent sx={{ flexGrow: 1, pb: 1 }}>

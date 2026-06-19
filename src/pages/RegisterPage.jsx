@@ -16,7 +16,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/perfil'); // Redirect if already logged in
+      navigate('/perfil'); // redirige si ya esta logueado
     }
   }, [user, navigate]);
 
@@ -34,7 +34,7 @@ const RegisterPage = () => {
       return;
     }
 
-    // Basic email format validation
+    // validacion basica del formato del email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Por favor, introduce un email válido.');
@@ -43,7 +43,7 @@ const RegisterPage = () => {
 
     const success = await register(name, email, password);
     if (success) {
-      navigate('/'); // Redirect to home on successful registration
+      navigate('/'); // redirige al home despues de registrarse
     } else {
       setError('Error al registrar usuario. Inténtalo de nuevo.');
     }

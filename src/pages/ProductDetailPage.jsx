@@ -7,18 +7,20 @@ import useProducts from '../hooks/useProducts';
 import { CartContext } from '../contexts/CartContext';
 import { translateProductTitle } from '../services/translator';
 
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23e0e0e0"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-family="sans-serif" font-size="20"%3ESin imagen%3C/text%3E%3C/svg%3E';
+
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Initialize useNavigate
-  const { products, loading, error } = useProducts('single', id); // products will be a single product object here
-  const product = products; // Rename for clarity
+  const navigate = useNavigate();
+  const { products, loading, error } = useProducts('single', id);
+  const product = products;
 
   const { addProduct } = useContext(CartContext);
 
   const handleAddToCart = () => {
     if (product) {
-      addProduct(product, 1); // Add one quantity of the product
-      alert(`${product.title} ha sido agregado al carrito.`); // Simple alert for now
+      addProduct(product, 1);
+      alert(`${product.title} ha sido agregado al carrito.`);
     }
   };
 
@@ -26,7 +28,7 @@ const ProductDetailPage = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
-        <Button variant="outlined" sx={{ mb: 2 }} onClick={() => navigate(-1)}> {/* "VOLVER" button */}
+        <Button variant="outlined" sx={{ mb: 2 }} onClick={() => navigate(-1)}>
           Volver
         </Button>
         {loading ? (
@@ -47,8 +49,12 @@ const ProductDetailPage = () => {
                     objectFit: 'contain',
                     borderRadius: 2,
                   }}
-                  image={product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/400'}
+                  image={product.images && product.images.length > 0 ? product.images[0] : PLACEHOLDER_IMAGE}
                   alt={translateProductTitle(product.title)}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = PLACEHOLDER_IMAGE;
+                  }}
                 />
               </Box>
             </Box>
