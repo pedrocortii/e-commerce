@@ -1,16 +1,66 @@
-# React + Vite
+# MegaStore - E-Commerce React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto final de la materia. Es una tienda online hecha con React que permite navegar productos, agregarlos al carrito, buscar, filtrar por categoría, simular login/registro y ver el perfil de usuario.
 
-Currently, two official plugins are available:
+## Stack utilizado
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 18
+- Vite
+- React Router DOM v6
+- Material UI
+- Context API
+- Custom Hooks
+- Fetch API nativa
 
-## React Compiler
+## API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Se utiliza la [Platzi Fake Store API](https://fakeapi.platzi.com/) para obtener productos y categorías.
 
-## Expanding the ESLint configuration
+## Cómo correr el proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clonar el repositorio
+2. Instalar las dependencias:
+
+```bash
+npm install
+```
+
+3. Levantar el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+4. Abrir en el navegador la URL que muestra la consola (por defecto `http://localhost:5173`)
+
+## Páginas y rutas
+
+| Ruta | Página | Descripción |
+|------|--------|-------------|
+| `/` | Home | Productos destacados aleatorios |
+| `/productos` | Productos | Listado completo con buscador y filtro por categoría |
+| `/producto/:id` | Detalle de producto | Información completa de un producto |
+| `/login` | Login | Inicio de sesión simulado |
+| `/registro` | Registro | Registro de usuario simulado |
+| `/carrito` | Carrito | Productos agregados, total y finalizar compra |
+| `/perfil` | Perfil | Datos del usuario logueado |
+| `/contacto` | Contacto | Formulario de contacto |
+| `*` | 404 | Página no encontrada |
+
+## Estructura de carpetas
+src/
+components/   -> Header y Footer
+pages/        -> Una pagina por ruta
+contexts/     -> CartContext y UserContext
+hooks/        -> useProducts y useCategories
+services/     -> Llamadas a la API y traductor de titulos
+routes/       -> Configuracion de React Router
+theme/        -> Tema personalizado de Material UI
+assets/       -> Imagenes
+
+## Funcionalidades principales
+- **Carrito de compras**: agregar, eliminar, vaciar y calcular total (CartContext)
+- **Usuario simulado**: login y registro sin backend real, persistencia con localStorage (UserContext)
+- **Búsqueda y filtros**: por nombre de producto y por categoría
+- **Paginado**: en el listado de productos
+- **Manejo de errores**: estados de loading y error en las llamadas a la API
