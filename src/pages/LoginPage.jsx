@@ -1,42 +1,47 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Container, Typography, Box, TextField, Button, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { UserContext } from '../contexts/UserContext';
+import React, { useState, useContext, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  Box,
+  TextField,
+  Button,
+  Alert,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { UserContext } from "../contexts/UserContext";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login, user } = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
-      navigate('/perfil'); // redirige si ya esta logueado
-    }
+    if (user) navigate("/perfil"); // redirige si ya esta logueado
   }, [user, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
     if (!email || !password) {
-      setError('Por favor, ingresa tu email y contraseña.');
+      setError("Por favor, ingresá tu email y contraseña.");
       return;
     }
 
-    const success = await login(email, password);
-    if (success) {
-      navigate('/perfil'); // redirige al perfil despues de loguearse
+    const result = await login(email, password);
+    if (result.success) {
+      navigate("/perfil");
     } else {
-      setError('Credenciales incorrectas. Inténtalo de nuevo.');
+      setError(result.error || "Credenciales incorrectas.");
     }
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <Container maxWidth="xs" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">

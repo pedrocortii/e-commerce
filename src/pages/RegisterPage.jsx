@@ -1,56 +1,61 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Container, Typography, Box, TextField, Button, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { UserContext } from '../contexts/UserContext';
+import React, { useState, useContext, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  Box,
+  TextField,
+  Button,
+  Alert,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { UserContext } from "../contexts/UserContext";
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { register, user } = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
-      navigate('/perfil'); // redirige si ya esta logueado
-    }
+    if (user) navigate("/perfil"); // redirige si ya esta logueado
   }, [user, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
     if (!name || !email || !password || !confirmPassword) {
-      setError('Por favor, completa todos los campos.');
+      setError("Por favor, completá todos los campos.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden.');
+      setError("Las contraseñas no coinciden.");
       return;
     }
 
     // validacion basica del formato del email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError('Por favor, introduce un email válido.');
+      setError("Por favor, ingresá un email válido.");
       return;
     }
 
-    const success = await register(name, email, password);
-    if (success) {
-      navigate('/'); // redirige al home despues de registrarse
+    const result = await register(name, email, password);
+    if (result.success) {
+      navigate("/");
     } else {
-      setError('Error al registrar usuario. Inténtalo de nuevo.');
+      setError(result.error || "Error al registrar usuario.");
     }
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <Container maxWidth="xs" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
